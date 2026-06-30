@@ -1,0 +1,15 @@
+
+- name: "My dataset 1"
+
+  model:
+
+    filePathList:
+      - "./inputs/fitter/likelihood/datasets/mydataset.root"
+
+    tree: "events"
+
+    selectionCutFormula: "topology != -1"
+
+    nominalWeightFormula:
+      - "asimovWeight"
+

@@ -1,0 +1,195 @@
+
+
+
+
+parameterSetList:
+  - name: "Flux parameters"
+    isEnabled: true # default: true
+
+    # example of parameters defined with a covariance matrix
+
+    useEigenDecompInFit: false # false by default
+    allowPca: false # false by default
+
+    covarianceMatrixFilePath: "./inputs/parameters/flux/covarianceFile.root"
+    covarianceMatrixTMatrixD: "covarianceMatrix"
+
+    # knowing that makes it faster to load
+    useOnlyOneParameterPerEvent: true
+
+    dialSetDefinitions:
+      - applyOnDataSets: [ "*" ]
+        parametersBinningPath: "./inputs/parameters/flux/binning.txt"
+        printDialsSummary: true
+    printDialSetsSummary: true
+
+
+  - name: "Free norm parameters"
+    isEnabled: true # default: true
+
+    nominalStepSize: 0.1
+
+    # as the template parameters are defined with a true binning, we only expect one parameter to apply on each event
+    useOnlyOneParameterPerEvent: true
+
+    # here you can define the binning of the template parameters
+    dialSetDefinitions:
+      - applyOnDataSets: [ "*" ]
+        # the true variables will be defined here:
+        parametersBinningPath: "./inputs/parameters/free/binning.txt"
+#        applyCondition: ""
+
+
+  - name: "Dummy Systematics"
+    isEnabled: true
+
+    nominalStepSize: 0.1
+
+    parameterDefinitions:
+
+      # ── Normalization ──────────────────────────────────────────────────────
+      # Multiplies matched events by the parameter value.  No external input.
+      # type-specific option: parametersBinningPath (optional, bin-by-bin norm)
+      - name: "Par1"
+        isEnabled: true
+        priorType: Flat
+        priorValue: 1.0
+        isFixed: false
+        isThrown: false
+        parameterStepSize: 0.1
+        parameterLimits: [0.0, 2.0]
+        physicalLimits: [0.0, 2.0]
+        throwLimits: [0.0, 2.0]
+        dialSetDefinitions:
+          - dialType: Normalization
+            applyOnDataSets: [ "FD" ]
+
+      # ── Spline ────────────────────────────────────────────────────────────
+      # Per-event spline built from a TClonesArray<TGraph> branch.
+      # Branch par2_TGraph exists in the dataset but its Y values are random
+      # Gaussians — encode proper (par_value, weight) knots before enabling.
+      # type-specific options: dialLeafName, dialsFilePath, dialsList, dialSubType
+      #   dialSubType: UniformSpline | GeneralSpline | MonotonicSpline | AkimaSpline
+      - name: "Par2"
+        isEnabled: false
+        priorType: Flat
+        priorValue: 1.0
+        isFixed: false
+        isThrown: false
+        parameterStepSize: 0.1
+        parameterLimits: [0.0, 2.0]
+        physicalLimits: [0.0, 2.0]
+        throwLimits: [0.0, 2.0]
+        dialSetDefinitions:
+          - dialType: Spline
+            dialSubType: MonotonicSpline
+            dialLeafName: par2_TGraph
+            applyOnDataSets: [ "FD" ]
+            allowDialExtrapolation: false
+            useMirrorDial: false
+            minDialResponse: 0.0
+            maxDialResponse: 3.0
+
+      # ── Graph ─────────────────────────────────────────────────────────────
+      # Per-event linear interpolation from a TClonesArray<TGraph> branch.
+      # Same branch requirement as Spline.
+      # type-specific options: dialLeafName, dialsFilePath, dialsList
+      - name: "Par3"
+        isEnabled: false
+        priorType: Flat
+        priorValue: 1.0
+        isFixed: false
+        isThrown: false
+        parameterStepSize: 0.1
+        parameterLimits: [0.0, 2.0]
+        physicalLimits: [0.0, 2.0]
+        throwLimits: [0.0, 2.0]
+        dialSetDefinitions:
+          - dialType: Graph
+            dialLeafName: par3_TGraph
+            applyOnDataSets: [ "FD" ]
+            allowDialExtrapolation: false
+            minDialResponse: 0.0
+            maxDialResponse: 3.0
+
+      # ── Surface ───────────────────────────────────────────────────────────
+      # 2-D interpolation over a dial surface stored in an external ROOT file.
+      # Enable after providing dialsFilePath.
+      # type-specific options: dialLeafName, dialsFilePath, dialsList, dialSubType
+      #   dialSubType: Bilinear | Bicubic
+      - name: "Par4"
+        isEnabled: false
+        priorType: Flat
+        priorValue: 1.0
+        isFixed: false
+        isThrown: false
+        parameterStepSize: 0.1
+        parameterLimits: [0.0, 2.0]
+        physicalLimits: [0.0, 2.0]
+        throwLimits: [0.0, 2.0]
+        dialSetDefinitions:
+          - dialType: Surface
+            dialSubType: Bilinear
+            dialLeafName: par1_TGraph        # placeholder
+            applyOnDataSets: [ "FD" ]
+            allowDialExtrapolation: false
+            # dialsFilePath: "./inputs/parameters/surface/surface.root"
+
+      # ── Tabulated ─────────────────────────────────────────────────────────
+      # Weight read from a pre-computed lookup table.
+      # Enable after filling tableConfig with a real table source.
+      # type-specific option: tableConfig
+      - name: "Par5"
+        isEnabled: false
+        priorType: Flat
+        priorValue: 1.0
+        isFixed: false
+        isThrown: false
+        parameterStepSize: 0.1
+        parameterLimits: [0.0, 2.0]
+        physicalLimits: [0.0, 2.0]
+        throwLimits: [0.0, 2.0]
+        dialSetDefinitions:
+          - dialType: Tabulated
+            applyOnDataSets: [ "FD" ]
+            tableConfig: {}                  # placeholder — replace with real config
+
+      # ── Kriged ────────────────────────────────────────────────────────────
+      # Gaussian-process interpolation over scattered dial samples.
+      # Enable after filling tableConfig with kriging source data.
+      # type-specific option: tableConfig
+      - name: "Par6"
+        isEnabled: false
+        priorType: Flat
+        priorValue: 1.0
+        isFixed: false
+        isThrown: false
+        parameterStepSize: 0.1
+        parameterLimits: [0.0, 2.0]
+        physicalLimits: [0.0, 2.0]
+        throwLimits: [0.0, 2.0]
+        dialSetDefinitions:
+          - dialType: Kriged
+            applyOnDataSets: [ "FD" ]
+            tableConfig: {}                  # placeholder — replace with real config
+
+      # ── Formula ───────────────────────────────────────────────────────────
+      # Weight computed by a ROOT TFormula evaluated per event.
+      # NOTE: not GPU-accelerated — avoid in large-scale fits.
+      # Enable after writing a valid ROOT formula string.
+      - name: "Par7"
+        isEnabled: false
+        priorType: Flat
+        priorValue: 1.0
+        isFixed: false
+        isThrown: false
+        parameterStepSize: 0.1
+        parameterLimits: [0.0, 2.0]
+        physicalLimits: [0.0, 2.0]
+        throwLimits: [0.0, 2.0]
+        dialSetDefinitions:
+          - dialType: Formula
+            applyOnDataSets: [ "FD" ]
+            # formula: "1 + [0]*x"           # replace with actual ROOT expression
+
+
