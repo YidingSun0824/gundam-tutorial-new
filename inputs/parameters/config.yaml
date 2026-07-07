@@ -3,7 +3,7 @@
 
 
 parameterSetList:
-  - name: "Flux parameters"
+  - name: "List of correlated normalization parameters"
     isEnabled: true # default: true
 
     # example of parameters defined with a covariance matrix
@@ -24,7 +24,7 @@ parameterSetList:
     printDialSetsSummary: true
 
 
-  - name: "Free norm parameters"
+  - name: "List of Free Normalization parameters"
     isEnabled: true # default: true
 
     nominalStepSize: 0.1
@@ -50,7 +50,21 @@ parameterSetList:
       # ── Normalization ──────────────────────────────────────────────────────
       # Multiplies matched events by the parameter value.  No external input.
       # type-specific option: parametersBinningPath (optional, bin-by-bin norm)
-      - name: "Par1"
+      - name: "Gaussian Normalization parameter"
+        isEnabled: true
+        priorType: Gaussian
+        priorValue: 1.0
+        isFixed: false
+        isThrown: false
+        parameterStepSize: 0.1
+        parameterLimits: [0.0, 2.0]
+        physicalLimits: [0.0, 2.0]
+        throwLimits: [0.0, 2.0]
+        dialSetDefinitions:
+          - dialType: Normalization
+            applyOnDataSets: [ "my dataset 1" ]
+
+      - name: "Flat Normalization parameter with selection condition"
         isEnabled: true
         priorType: Flat
         priorValue: 1.0
@@ -62,41 +76,16 @@ parameterSetList:
         throwLimits: [0.0, 2.0]
         dialSetDefinitions:
           - dialType: Normalization
-            applyOnDataSets: [ "FD" ]
-
-      # ── Spline ────────────────────────────────────────────────────────────
-      # Per-event spline built from a TClonesArray<TGraph> branch.
-      # Branch par2_TGraph exists in the dataset but its Y values are random
-      # Gaussians — encode proper (par_value, weight) knots before enabling.
-      # type-specific options: dialLeafName, dialsFilePath, dialsList, dialSubType
-      #   dialSubType: UniformSpline | GeneralSpline | MonotonicSpline | AkimaSpline
-      - name: "Par2"
-        isEnabled: false
-        priorType: Flat
-        priorValue: 1.0
-        isFixed: false
-        isThrown: false
-        parameterStepSize: 0.1
-        parameterLimits: [0.0, 2.0]
-        physicalLimits: [0.0, 2.0]
-        throwLimits: [0.0, 2.0]
-        dialSetDefinitions:
-          - dialType: Spline
-            dialSubType: MonotonicSpline
-            dialLeafName: par2_TGraph
-            applyOnDataSets: [ "FD" ]
-            allowDialExtrapolation: false
-            useMirrorDial: false
-            minDialResponse: 0.0
-            maxDialResponse: 3.0
+            applyOnDataSets: [ "my dataset 1" ]
+            applyCondition: "selection == 1"
 
       # ── Graph ─────────────────────────────────────────────────────────────
       # Per-event linear interpolation from a TClonesArray<TGraph> branch.
       # Same branch requirement as Spline.
       # type-specific options: dialLeafName, dialsFilePath, dialsList
-      - name: "Par3"
+      - name: "Graph interpolation parameter"
         isEnabled: false
-        priorType: Flat
+        priorType: Gaussian
         priorValue: 1.0
         isFixed: false
         isThrown: false
@@ -107,10 +96,191 @@ parameterSetList:
         dialSetDefinitions:
           - dialType: Graph
             dialLeafName: par3_TGraph
-            applyOnDataSets: [ "FD" ]
+            applyOnDataSets: [ "My dataset 1" ]
             allowDialExtrapolation: false
             minDialResponse: 0.0
             maxDialResponse: 3.0
+
+      # ── Spline ────────────────────────────────────────────────────────────
+      # Per-event spline built from a TClonesArray<TGraph> branch.
+      # All entries below are disabled documentation examples; enable only after
+      # the spline response format (par_value, weight knots) is fully validated.
+      # type-specific options: dialLeafName, dialsFilePath, dialsList, dialSubType
+      #   dialSubType: not-a-knot | natural | catmull-rom | akima
+      #                monotonic, <any of the above>
+      #                uniformity(<tolerance>)   e.g. uniformity(1E-3)
+
+      - name: "Spline: not-a-knot (default)"
+        isEnabled: false
+        priorValue: 1.0
+        isFixed: false
+        isThrown: false
+        parameterStepSize: 0.1
+        parameterLimits: [0.0, 2.0]
+        physicalLimits: [0.0, 2.0]
+        throwLimits: [0.0, 2.0]
+        dialSetDefinitions:
+          - dialType: Spline
+            dialSubType: "not-a-knot"
+            dialLeafName: par2_TGraph
+            applyOnDataSets: [ "My dataset 1" ]
+            allowDialExtrapolation: false
+            useMirrorDial: false
+            minDialResponse: 0.0
+            maxDialResponse: 3.0
+
+      - name: "Spline: natural"
+        isEnabled: false
+        priorValue: 1.0
+        isFixed: false
+        isThrown: false
+        parameterStepSize: 0.1
+        parameterLimits: [0.0, 2.0]
+        physicalLimits: [0.0, 2.0]
+        throwLimits: [0.0, 2.0]
+        dialSetDefinitions:
+          - dialType: Spline
+            dialSubType: "natural"
+            dialLeafName: par2_TGraph
+            applyOnDataSets: [ "My dataset 1" ]
+            allowDialExtrapolation: false
+            useMirrorDial: false
+            minDialResponse: 0.0
+            maxDialResponse: 3.0
+
+      - name: "Spline: catmull-rom"
+        isEnabled: false
+        priorValue: 1.0
+        isFixed: false
+        isThrown: false
+        parameterStepSize: 0.1
+        parameterLimits: [0.0, 2.0]
+        physicalLimits: [0.0, 2.0]
+        throwLimits: [0.0, 2.0]
+        dialSetDefinitions:
+          - dialType: Spline
+            dialSubType: "catmull-rom"
+            dialLeafName: par2_TGraph
+            applyOnDataSets: [ "My dataset 1" ]
+            allowDialExtrapolation: false
+            useMirrorDial: false
+            minDialResponse: 0.0
+            maxDialResponse: 3.0
+
+      - name: "Spline: akima"
+        isEnabled: false
+        priorValue: 1.0
+        isFixed: false
+        isThrown: false
+        parameterStepSize: 0.1
+        parameterLimits: [0.0, 2.0]
+        physicalLimits: [0.0, 2.0]
+        throwLimits: [0.0, 2.0]
+        dialSetDefinitions:
+          - dialType: Spline
+            dialSubType: "akima"
+            dialLeafName: par3_TGraph
+            applyOnDataSets: [ "My dataset 1" ]
+            allowDialExtrapolation: false
+            useMirrorDial: false
+            minDialResponse: 0.0
+            maxDialResponse: 3.0
+
+      - name: "Spline: monotonic, not-a-knot"
+        isEnabled: false
+        priorValue: 1.0
+        isFixed: false
+        isThrown: false
+        parameterStepSize: 0.1
+        parameterLimits: [0.0, 2.0]
+        physicalLimits: [0.0, 2.0]
+        throwLimits: [0.0, 2.0]
+        dialSetDefinitions:
+          - dialType: Spline
+            dialSubType: "monotonic, not-a-knot"
+            dialLeafName: par2_TGraph
+            applyOnDataSets: [ "My dataset 1" ]
+            allowDialExtrapolation: false
+            useMirrorDial: false
+            minDialResponse: 0.0
+            maxDialResponse: 3.0
+
+      - name: "Spline: monotonic, natural"
+        isEnabled: false
+        priorValue: 1.0
+        isFixed: false
+        isThrown: false
+        parameterStepSize: 0.1
+        parameterLimits: [0.0, 2.0]
+        physicalLimits: [0.0, 2.0]
+        throwLimits: [0.0, 2.0]
+        dialSetDefinitions:
+          - dialType: Spline
+            dialSubType: "monotonic, natural"
+            dialLeafName: par2_TGraph
+            applyOnDataSets: [ "My dataset 1" ]
+            allowDialExtrapolation: false
+            useMirrorDial: false
+            minDialResponse: 0.0
+            maxDialResponse: 3.0
+
+      - name: "Spline: monotonic, catmull-rom"
+        isEnabled: false
+        priorValue: 1.0
+        isFixed: false
+        isThrown: false
+        parameterStepSize: 0.1
+        parameterLimits: [0.0, 2.0]
+        physicalLimits: [0.0, 2.0]
+        throwLimits: [0.0, 2.0]
+        dialSetDefinitions:
+          - dialType: Spline
+            dialSubType: "monotonic, catmull-rom"
+            dialLeafName: par2_TGraph
+            applyOnDataSets: [ "My dataset 1" ]
+            allowDialExtrapolation: false
+            useMirrorDial: false
+            minDialResponse: 0.0
+            maxDialResponse: 3.0
+
+      - name: "Spline: monotonic, akima"
+        isEnabled: false
+        priorValue: 1.0
+        isFixed: false
+        isThrown: false
+        parameterStepSize: 0.1
+        parameterLimits: [0.0, 2.0]
+        physicalLimits: [0.0, 2.0]
+        throwLimits: [0.0, 2.0]
+        dialSetDefinitions:
+          - dialType: Spline
+            dialSubType: "monotonic, akima"
+            dialLeafName: par3_TGraph
+            applyOnDataSets: [ "My dataset 1" ]
+            allowDialExtrapolation: false
+            useMirrorDial: false
+            minDialResponse: 0.0
+            maxDialResponse: 3.0
+
+      - name: "Spline: uniformity(1E-3)"
+        isEnabled: false
+        priorValue: 1.0
+        isFixed: false
+        isThrown: false
+        parameterStepSize: 0.1
+        parameterLimits: [0.0, 2.0]
+        physicalLimits: [0.0, 2.0]
+        throwLimits: [0.0, 2.0]
+        dialSetDefinitions:
+          - dialType: Spline
+            dialSubType: "uniformity(1E-3)"
+            dialLeafName: par2_TGraph
+            applyOnDataSets: [ "My dataset 1" ]
+            allowDialExtrapolation: false
+            useMirrorDial: false
+            minDialResponse: 0.0
+            maxDialResponse: 3.0
+
 
       # ── Surface ───────────────────────────────────────────────────────────
       # 2-D interpolation over a dial surface stored in an external ROOT file.
@@ -131,7 +301,7 @@ parameterSetList:
           - dialType: Surface
             dialSubType: Bilinear
             dialLeafName: par1_TGraph        # placeholder
-            applyOnDataSets: [ "FD" ]
+            applyOnDataSets: [ "My dataset 1" ]
             allowDialExtrapolation: false
             # dialsFilePath: "./inputs/parameters/surface/surface.root"
 
@@ -151,7 +321,7 @@ parameterSetList:
         throwLimits: [0.0, 2.0]
         dialSetDefinitions:
           - dialType: Tabulated
-            applyOnDataSets: [ "FD" ]
+            applyOnDataSets: [ "My dataset 1" ]
             tableConfig: {}                  # placeholder — replace with real config
 
       # ── Kriged ────────────────────────────────────────────────────────────
@@ -170,7 +340,7 @@ parameterSetList:
         throwLimits: [0.0, 2.0]
         dialSetDefinitions:
           - dialType: Kriged
-            applyOnDataSets: [ "FD" ]
+            applyOnDataSets: [ "My dataset 1" ]
             tableConfig: {}                  # placeholder — replace with real config
 
       # ── Formula ───────────────────────────────────────────────────────────
@@ -189,7 +359,7 @@ parameterSetList:
         throwLimits: [0.0, 2.0]
         dialSetDefinitions:
           - dialType: Formula
-            applyOnDataSets: [ "FD" ]
+            applyOnDataSets: [ "My dataset 1" ]
             # formula: "1 + [0]*x"           # replace with actual ROOT expression
 
 
