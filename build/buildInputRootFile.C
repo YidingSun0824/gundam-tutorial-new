@@ -1,4 +1,5 @@
 int nEvents{int(1E6)};
+constexpr int nKnots = 7;
 
 struct Event{
   int reaction{-1};
@@ -12,11 +13,38 @@ struct Event{
   TClonesArray par3{ "TGraph", 1 };
 };
 
+void fillRandomResponse(double y[nKnots])
+{
+  for(int i = 0; i < 7; ++i){
+    int k = gRandom->Integer(101); // 0, 1, ..., 100
+    y[i] = k / 100.0;              // 0.00, ..., 1.00
+  }
+
+  y[3] = 1.0; // x[3] = 0 sigma, nominal response
+}
+
+void fillSmoothRandomResponse(const double x[nKnots], double y[nKnots])
+{
+  double a = gRandom->Gaus(0.0, 0.06);
+  double b = gRandom->Gaus(0.0, 0.015);
+
+  for(int i = 0; i < nKnots; ++i){
+
+    double dx = x[i];
+    y[i] = std::exp(a * dx + b * dx * dx);
+
+    // to avoid extreme weights.
+    if(y[i] < 0.05) y[i] = 0.05;
+    if(y[i] > 3.00) y[i] = 3.00;
+  }
+  y[3] = 1.0; // x = 0 sigma
+}
+
 void buildInputRootFile(){
 
   gRandom = new TRandom3(202404); // Initialize with a UUID;
 
-  auto* file = TFile::Open("./inputs/datasets/mydataset.root", "RECREATE");
+  auto* file = TFile::Open("./mydataset.root", "RECREATE");
   auto* tree = new TTree("events", "events");
 
   Event e{};
@@ -27,14 +55,14 @@ void buildInputRootFile(){
   tree->Branch("reaction", &e.reaction);
   tree->Branch("selection", &e.selection);
   tree->Branch("asimovWeight", &e.asimovWeight);
-  tree->Branch("par1_TGraph", &e.par1);
-  tree->Branch("par2_TGraph", &e.par2);
-  tree->Branch("par3_TGraph", &e.par3);
+  tree->Branch("par1_TGraph", &e.par1, 32000, -1);   //tree->Branch(branchName, address, bufferSize, splitLevel);
+  tree->Branch("par2_TGraph", &e.par2, 32000, -1);
+  tree->Branch("par3_TGraph", &e.par3, 32000, -1);
 
-  double par_x[7]  = { -3,   -2,   -1,   0,    1,    2,    3   };
-  double par1_y[7] = {  1.6,  1.3,  1.1,  1.0,  1.1,  1.3,  1.6 }; // symmetric U-shape
-  double par2_y[7] = {  0.8,  0.9,  1.0,  1.0,  1.2,  1.4,  1.6 }; // monotone rise
-  double par3_y[7] = {  1.4,  1.2,  1.1,  1.0,  0.9,  0.8,  0.7 }; // monotone fall
+  double par_x[nKnots]  = { -3,   -2,   -1,   0,    1,    2,    3   };
+  double par1_y[nKnots];
+  double par2_y[nKnots];
+  double par3_y[nKnots];
 
   double fraction{0.1}; // shape2/shape1
   auto fShape1 = std::make_unique<TF1>("fShape1", "ROOT::Math::chisquared_pdf(x, 4)", 0, 15);
@@ -78,9 +106,23 @@ void buildInputRootFile(){
       else if( buffer < 0.95 ){ e.selection =  4; }
       else                    { e.selection = -1; }
     }
-    e.par1.Clear("C");  new (e.par1[0]) TGraph(7, par_x, par1_y);
-    e.par2.Clear("C");  new (e.par2[0]) TGraph(7, par_x, par2_y);
-    e.par3.Clear("C");  new (e.par3[0]) TGraph(7, par_x, par3_y);
+    // Generate random response-function values for this event
+    fillSmoothRandomResponse(par_x, par1_y);
+    fillSmoothRandomResponse(par_x, par2_y);
+    fillRandomResponse(par3_y);
+
+    // Reuse the TClonesArray memory and construct one TGraph per parameter
+    e.par1.Clear("C");
+    e.par2.Clear("C");
+    e.par3.Clear("C");
+
+    auto* gPar1 = new (e.par1[0]) TGraph(nKnots, par_x, par1_y);
+    auto* gPar2 = new (e.par2[0]) TGraph(nKnots, par_x, par2_y);
+    auto* gPar3 = new (e.par3[0]) TGraph(nKnots, par_x, par3_y);
+
+    gPar1->SetName("par1_response");
+    gPar2->SetName("par2_response");
+    gPar3->SetName("par3_response");
 
     tree->Fill();
   }
