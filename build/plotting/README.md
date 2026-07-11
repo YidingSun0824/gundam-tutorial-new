@@ -1,29 +1,33 @@
 # Response Function Plotting
 
-ROOT macro for drawing event-by-event systematic response functions stored in the input ROOT file.
+This folder contains ROOT C++ macros for inspecting the response functions stored in the mock input dataset.
 
-From the `build/plotting` folder, run:
+## drawResponseFunctions.C
 
-```bash
-root -l drawResponseFunctions.C
-```
-
-By default, the macro reads:
+`drawResponseFunctions.C` reads event-by-event systematic response functions from the `events` TTree in:
 
 ```text
-../mydataset.root
+inputs/datasets/mydataset.root
 ```
 
-and draws the first 5 events.
+The response functions are stored in the following branches:
 
-To specify another file or number of events, run inside ROOT:
+- `par1_TGraph`
+- `par2_TGraph`
+- `par3_TGraph`
 
-```cpp
-.x plotting/drawResponseFunctions.C("../mydataset.root", 10)
+From the repository root, run:
+
+```bash
+root -l 'build/plotting/drawResponseFunctions.C("inputs/datasets/mydataset.root",5)'
 ```
 
-The macro creates a multi-page PDF:
+The second argument specifies the number of events to plot. In this example, the macro draws the response functions for the first five events.
+
+The macro creates the multi-page PDF:
 
 ```text
 response_functions.pdf
 ```
+
+The response functions for `par1` and `par2` are smooth. The response function for `par3` is intentionally non-smooth so that different interpolation methods can be tested and compared.
