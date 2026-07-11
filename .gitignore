@@ -19,3 +19,4 @@ temp/
 
 # VS Code local settings
 .vscode/
+inputs/datasets/mydataset.root
