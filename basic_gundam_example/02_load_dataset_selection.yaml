@@ -1,6 +1,6 @@
 # Step 2: Dataset + selection.
 # Adds a selectionCutStr that picks topology "selection == 1" from the dataset.
-# Events are binned in 2D (pmu x pp) using the shared binning file.
+# Events are binned in 1D (pmu) using the local selection_1d.txt file.
 # No parameters — event weights are nominal (asimovWeight) only.
 # Run from the project root: gundamFitter -c basic_gundam_example/02_load_dataset_selection.yaml
 
@@ -13,13 +13,13 @@ fitterEngineConfig:
 
   likelihoodInterfaceConfig:
 
-    dataSetList: #"./inputs/datasets/config.yaml"
+    dataSetList:
       - name: "My dataset 1"
 
         model:
 
           filePathList:
-            - "./inputs/datasets/mydataset.root"
+            - "./super_advanced_gundam_example/inputs/datasets/mydataset.root"
 
           tree: "events"
 
@@ -35,7 +35,7 @@ fitterEngineConfig:
           - name: "Selection 1"
             isEnabled: true
             selectionCutStr: "selection == 1"
-            binning: "./inputs/samples/binnings/selection1.txt"
+            binning: "./basic_gundam_example/selection_1d.txt"
             dataSets: [ "My dataset 1" ]
 
       parametersManagerConfig:

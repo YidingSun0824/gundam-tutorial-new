@@ -11,7 +11,7 @@ parameterSetList:
     useEigenDecompInFit: false # false by default
     allowPca: false # false by default
 
-    covarianceMatrixFilePath: "./inputs/parameters/flux/covarianceFile.root"
+    covarianceMatrixFilePath: "./super_advanced_gundam_example/inputs/parameters/flux/covarianceFile.root"
     covarianceMatrixTMatrixD: "covarianceMatrix"
 
     # knowing that makes it faster to load
@@ -19,7 +19,7 @@ parameterSetList:
 
     dialSetDefinitions:
       - applyOnDataSets: [ "*" ]
-        parametersBinningPath: "./inputs/parameters/flux/binning.txt"
+        parametersBinningPath: "./super_advanced_gundam_example/inputs/parameters/flux/binning.txt"
         printDialsSummary: true
     printDialSetsSummary: true
 
@@ -36,7 +36,7 @@ parameterSetList:
     dialSetDefinitions:
       - applyOnDataSets: [ "*" ]
         # the true variables will be defined here:
-        parametersBinningPath: "./inputs/parameters/free/binning.txt"
+        parametersBinningPath: "./super_advanced_gundam_example/inputs/parameters/free/binning.txt"
 #        applyCondition: ""
 
 
@@ -303,7 +303,7 @@ parameterSetList:
             dialLeafName: par1_TGraph        # placeholder
             applyOnDataSets: [ "My dataset 1" ]
             allowDialExtrapolation: false
-            # dialsFilePath: "./inputs/parameters/surface/surface.root"
+            # dialsFilePath: "./super_advanced_gundam_example/inputs/parameters/surface/surface.root"
 
       # ── Tabulated ─────────────────────────────────────────────────────────
       # Weight read from a pre-computed lookup table.

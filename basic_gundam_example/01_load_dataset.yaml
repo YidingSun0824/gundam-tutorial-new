@@ -12,13 +12,13 @@ fitterEngineConfig:
 
   likelihoodInterfaceConfig:
 
-    dataSetList: #"./inputs/datasets/config.yaml"
+    dataSetList:
       - name: "My dataset 1"
 
         model:
 
           filePathList:
-            - "./inputs/datasets/mydataset.root"
+            - "./super_advanced_gundam_example/inputs/datasets/mydataset.root"
 
           tree: "events"
 

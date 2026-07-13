@@ -26,7 +26,7 @@ The output should look like:
 
 ```
 Processing build/buildInputRootFile.C...
-File writen in ./inputs/datasets/mydataset.root:/
+File writen in ./super_advanced_gundam_example/inputs/datasets/mydataset.root:/
 ```
 
 ## Running GUNDAM
@@ -77,7 +77,7 @@ gundamFitter -c config.yaml -t 4
 | `dialLeafName` | Branch name of `TClonesArray<TGraph>` in the event tree |
 | `dialsFilePath` | External ROOT file holding spline objects |
 | `dialsList` | Explicit list of spline object names inside `dialsFilePath` |
-| `dialSubType` | `UniformSpline` \| `GeneralSpline` \| `MonotonicSpline` \| `AkimaSpline` |
+| `dialSubType` | `Uniform` \| `General` \| `Monotonic` \| `Akima` |
 
 #### Graph
 | Option | Description |
