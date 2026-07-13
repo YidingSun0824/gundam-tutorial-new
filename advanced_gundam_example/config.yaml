@@ -1,0 +1,17 @@
+outputFolder: "./output/fit"
+minGundamVersion: 1.9.0
+
+fitterEngineConfig:
+
+  minimizerConfig:
+    type: "RootMinimizer"
+
+  likelihoodInterfaceConfig:
+
+    dataSetList: "./advanced_gundam_example/inputs/datasets/config.yaml"
+
+    plotGeneratorConfig: "./advanced_gundam_example/inputs/plots/config.yaml"
+
+    propagatorConfig:
+      sampleSetConfig: "./advanced_gundam_example/inputs/samples/config.yaml"
+      parametersManagerConfig: "./advanced_gundam_example/inputs/parameters/config.yaml"

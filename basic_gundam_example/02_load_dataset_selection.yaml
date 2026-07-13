@@ -19,7 +19,7 @@ fitterEngineConfig:
         model:
 
           filePathList:
-            - "./super_advanced_gundam_example/inputs/datasets/mydataset.root"
+            - "./advanced_gundam_example/inputs/datasets/mydataset.root"
 
           tree: "events"
 

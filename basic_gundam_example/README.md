@@ -54,6 +54,6 @@ scales the event weights for the selected sample.
 This package supplies its own sample binning (`selection_1d.txt`) and parameter
 definition (`parameters.txt`) directly.
 It does not reference the modular sample or parameter configuration files inside
-`super_advanced_gundam_example/`.
+`advanced_gundam_example/`.
 The only shared resource is the ROOT dataset file, which lives in
-`super_advanced_gundam_example/inputs/datasets/`.
+`advanced_gundam_example/inputs/datasets/`.
