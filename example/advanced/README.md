@@ -45,4 +45,4 @@ mv mydataset.root advanced/inputs/datasets/mydataset.root
 ```
 
 (The build macro writes `mydataset.root` to the current working directory.
-Move it to `./advanced/inputs/datasets/` before running the fitter.)
+Move it to `./example/advanced/inputs/datasets/` before running the fitter.)

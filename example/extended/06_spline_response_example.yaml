@@ -19,7 +19,7 @@ fitterEngineConfig:
         model:
 
           filePathList:
-            - "./advanced/inputs/datasets/mydataset.root"
+            - "./example/advanced/inputs/datasets/mydataset.root"
 
           tree: "events"
 
@@ -35,19 +35,19 @@ fitterEngineConfig:
           - name: "Selection 1 (1D: pmu)"
             isEnabled: true
             selectionCutStr: "selection == 1"
-            binning: "./extended/selection_1d.txt"
+            binning: "./example/extended/selection_1d.txt"
             dataSets: [ "My dataset 1" ]
 
           - name: "Selection 2 (2D: pmu x pp)"
             isEnabled: true
             selectionCutStr: "selection == 2"
-            binning: "./extended/selection_2d.txt"
+            binning: "./example/extended/selection_2d.txt"
             dataSets: [ "My dataset 1" ]
 
           - name: "Selection 3 (3D: enu x pmu x pp)"
             isEnabled: true
             selectionCutStr: "selection == 3"
-            binning: "./extended/selection_3d.txt"
+            binning: "./example/extended/selection_3d.txt"
             dataSets: [ "My dataset 1" ]
 
       parametersManagerConfig:
@@ -58,7 +58,7 @@ fitterEngineConfig:
             useOnlyOneParameterPerEvent: true
             dialSetDefinitions:
               - applyOnDataSets: [ "My dataset 1" ]
-                parametersBinningPath: "./extended/parameters.txt"
+                parametersBinningPath: "./example/extended/parameters.txt"
 
           - name: "Spline response (disabled)"
             isEnabled: false

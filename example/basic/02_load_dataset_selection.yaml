@@ -19,7 +19,7 @@ fitterEngineConfig:
         model:
 
           filePathList:
-            - "./advanced/inputs/datasets/mydataset.root"
+            - "./example/advanced/inputs/datasets/mydataset.root"
 
           tree: "events"
 
@@ -35,7 +35,7 @@ fitterEngineConfig:
           - name: "Selection 1"
             isEnabled: true
             selectionCutStr: "selection == 1"
-            binning: "./basic/selection_1d.txt"
+            binning: "./example/basic/selection_1d.txt"
             dataSets: [ "My dataset 1" ]
 
       parametersManagerConfig:

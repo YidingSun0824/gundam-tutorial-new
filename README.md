@@ -26,7 +26,7 @@ The output should look like:
 
 ```
 Processing build/buildInputRootFile.C...
-File writen in ./advanced/inputs/datasets/mydataset.root:/
+File writen in ./example/advanced/inputs/datasets/mydataset.root:/
 ```
 
 ## Running GUNDAM
