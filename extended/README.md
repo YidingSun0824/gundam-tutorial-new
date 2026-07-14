@@ -26,7 +26,7 @@ All commands are run from the **repository root**.
 ### Step 04 — Multiple selections
 
 ```
-gundamFitter -c advanced_gundam_example/04_multiple_selections.yaml
+gundamFitter -c advanced/04_multiple_selections.yaml
 ```
 
 Defines three concurrent samples, each with a different binning dimensionality:
@@ -40,7 +40,7 @@ No parameters are defined.
 ### Step 05 — Multiple free normalization parameters
 
 ```
-gundamFitter -c advanced_gundam_example/05_multiple_norm_parameters.yaml
+gundamFitter -c advanced/05_multiple_norm_parameters.yaml
 ```
 
 Adds 10 free normalization parameters generated from `parameters.txt`.
@@ -49,7 +49,7 @@ Each row in `parameters.txt` defines one parameter bin in reaction × pmu space.
 ### Step 06 — Spline response example
 
 ```
-gundamFitter -c advanced_gundam_example/06_spline_response_example.yaml
+gundamFitter -c advanced/06_spline_response_example.yaml
 ```
 
 Extends step 05 with a Spline dial (`dialType: Spline`, `dialSubType: not-a-knot`)
@@ -60,7 +60,7 @@ function knots have been validated.
 ### Step 07 — Correlated normalization parameters
 
 ```
-gundamFitter -c advanced_gundam_example/07_correlated_norm_parameters.yaml
+gundamFitter -c advanced/07_correlated_norm_parameters.yaml
 ```
 
 Replaces free normalization parameters with a covariance-matrix-driven set.
@@ -74,6 +74,6 @@ and the covariance matrix is read from `covarianceFile.root`.
 This package supplies its own sample binnings, parameter binnings, and covariance
 matrix directly.
 It does not reference the modular sample or parameter configuration files inside
-`advanced_gundam_example/`.
+`advanced/`.
 The only shared resource is the ROOT dataset file, which lives in
-`advanced_gundam_example/inputs/datasets/`.
+`advanced/inputs/datasets/`.

@@ -12,7 +12,7 @@ All commands are run from the **repository root**.
 ## Configuration structure
 
 ```
-advanced_gundam_example/
+advanced/
 ├── config.yaml              Top-level fitter entry point
 └── inputs/
     ├── datasets/            Dataset definition (ROOT file path, tree, selection cut, weights)
@@ -30,7 +30,7 @@ plotting) can be read and modified independently.
 ## Running
 
 ```
-gundamFitter -c advanced_gundam_example/config.yaml
+gundamFitter -c advanced/config.yaml
 ```
 
 ### Building the input dataset
@@ -41,8 +41,8 @@ expected location:
 
 ```
 root build/buildInputRootFile.C
-mv mydataset.root advanced_gundam_example/inputs/datasets/mydataset.root
+mv mydataset.root advanced/inputs/datasets/mydataset.root
 ```
 
 (The build macro writes `mydataset.root` to the current working directory.
-Move it to `./advanced_gundam_example/inputs/datasets/` before running the fitter.)
+Move it to `./advanced/inputs/datasets/` before running the fitter.)

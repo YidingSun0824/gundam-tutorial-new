@@ -4,7 +4,7 @@
   model:
 
     filePathList:
-      - "./advanced_gundam_example/inputs/datasets/mydataset.root"
+      - "./advanced/inputs/datasets/mydataset.root"
 
     tree: "events"
 

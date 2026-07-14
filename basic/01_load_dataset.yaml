@@ -1,9 +1,9 @@
 # Step 1: Load dataset only.
 # Verifies that the ROOT file opens, the event tree is readable, and the
 # dataset-level cut (selection != -1) is applied.  No sample binning, no parameters.
-# Run from the project root: gundamFitter -c basic_gundam_example/01_load_dataset.yaml
+# Run from the project root: gundamFitter -c basic/01_load_dataset.yaml
 
-outputFolder: "./output/basic_gundam_example/01"
+outputFolder: "./output/basic/01"
 
 fitterEngineConfig:
 
@@ -18,7 +18,7 @@ fitterEngineConfig:
         model:
 
           filePathList:
-            - "./advanced_gundam_example/inputs/datasets/mydataset.root"
+            - "./advanced/inputs/datasets/mydataset.root"
 
           tree: "events"
 

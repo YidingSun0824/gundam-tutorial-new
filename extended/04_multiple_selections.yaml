@@ -1,9 +1,9 @@
 # Step 4: Multiple selections with 1D, 2D, and 3D binning.
 # Three concurrent samples are defined, each using a local binning TXT file.
 # No parameters — demonstrates how to bin events into different topologies.
-# Run from the project root: gundamFitter -c advanced_gundam_example/04_multiple_selections.yaml
+# Run from the project root: gundamFitter -c advanced/04_multiple_selections.yaml
 
-outputFolder: "./output/advanced_gundam_example/04"
+outputFolder: "./output/advanced/04"
 
 fitterEngineConfig:
 
@@ -18,7 +18,7 @@ fitterEngineConfig:
         model:
 
           filePathList:
-            - "./advanced_gundam_example/inputs/datasets/mydataset.root"
+            - "./advanced/inputs/datasets/mydataset.root"
 
           tree: "events"
 
@@ -34,19 +34,19 @@ fitterEngineConfig:
           - name: "Selection 1 (1D: pmu)"
             isEnabled: true
             selectionCutStr: "selection == 1"
-            binning: "./extended_gundam_example/selection_1d.txt"
+            binning: "./extended/selection_1d.txt"
             dataSets: [ "My dataset 1" ]
 
           - name: "Selection 2 (2D: pmu x pp)"
             isEnabled: true
             selectionCutStr: "selection == 2"
-            binning: "./extended_gundam_example/selection_2d.txt"
+            binning: "./extended/selection_2d.txt"
             dataSets: [ "My dataset 1" ]
 
           - name: "Selection 3 (3D: enu x pmu x pp)"
             isEnabled: true
             selectionCutStr: "selection == 3"
-            binning: "./extended_gundam_example/selection_3d.txt"
+            binning: "./extended/selection_3d.txt"
             dataSets: [ "My dataset 1" ]
 
       parametersManagerConfig:
