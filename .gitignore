@@ -10,8 +10,7 @@ __pycache__/
 *.log
 *.out
 
-# Build / temp outputs
-build/
+# Generated outputs
 output/
 outputs/
 tmp/

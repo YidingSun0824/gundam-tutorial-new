@@ -2,39 +2,82 @@
 
 ## Tutorial structure
 
-This tutorial uses a simplified four-module input layout:
+The tutorial is organized into three progressive packages under `example/`:
 
 ```text
-inputs/
-├── datasets/    # mock ROOT dataset and dataset config
-├── parameters/  # flux/free parameter configs and binning tables
-├── samples/     # selection/sample definitions and sample binning tables
-└── plots/       # plot configuration
+example/
+├── basic/      Steps 01–03: dataset loading, selection, one normalization parameter
+├── extended/   Steps 04–07: multiple selections, spline dials, correlated parameters
+└── advanced/   Full modular configuration (config.yaml + inputs/ sub-tree)
+
+XGEN/           Mock dataset generator (buildInputRootFile.C)
+plotting/       Response-function inspection macros
 ```
 
-The master config is `config.yaml` at the repo root.
+The entry point for the full modular run is `example/advanced/config.yaml`.
 
 The old deep structure (`inputs/fitter/likelihood/...`) has been moved to `_archive/` for reference.
 
+---
+
 ## Building the input files
 
+Generate the mock ROOT dataset before running any fitter step.
+Run the build macro from the repository root, then move the output to the expected location:
+
 ```bash
-root build/buildInputRootFile.C
+root XGEN/buildInputRootFile.C
+mv mydataset.root example/advanced/inputs/datasets/mydataset.root
 ```
 
-The output should look like:
+The expected output from the build macro:
 
 ```
-Processing build/buildInputRootFile.C...
+Processing XGEN/buildInputRootFile.C...
 File writen in ./example/advanced/inputs/datasets/mydataset.root:/
 ```
 
+---
+
+## Input Organization: Flat vs. Modular
+
+The `basic/` and `extended/` packages keep their small `.txt` binning and selection
+tables right next to each config file.
+Every step is fully standalone and can be run in isolation without touching any
+other package — the only shared resource is the ROOT dataset in
+`example/advanced/inputs/datasets/`.
+
+The `advanced/` package mirrors how a real large-scale analysis is organized:
+configuration is split across a dedicated `inputs/` sub-tree (datasets, samples,
+parameters, plots), with a single `config.yaml` entry point that references each
+sub-config by path.
+This separation makes each concern independently readable and editable.
+
+---
+
 ## Running GUNDAM
 
-### Running the fitter
+### Basic examples (steps 01–03)
 
 ```bash
-gundamFitter -c config.yaml -t 4
+gundamFitter -c example/basic/01_load_dataset.yaml
+gundamFitter -c example/basic/02_load_dataset_selection.yaml
+gundamFitter -c example/basic/03_load_dataset_selection_normparam.yaml
+```
+
+### Extended examples (steps 04–07)
+
+```bash
+gundamFitter -c example/extended/04_multiple_selections.yaml
+gundamFitter -c example/extended/05_multiple_norm_parameters.yaml
+gundamFitter -c example/extended/06_spline_response_example.yaml
+gundamFitter -c example/extended/07_correlated_norm_parameters.yaml
+```
+
+### Full modular run
+
+```bash
+gundamFitter -c example/advanced/config.yaml -t 4
 ```
 
 ---

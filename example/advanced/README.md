@@ -1,4 +1,4 @@
-# Super Advanced GUNDAM Example
+# Advanced GUNDAM Example
 
 Demonstrates the full modular GUNDAM configuration structure, where the fitter
 configuration is divided across multiple YAML files organized by concern.
@@ -12,7 +12,7 @@ All commands are run from the **repository root**.
 ## Configuration structure
 
 ```
-advanced/
+example/advanced/
 ├── config.yaml              Top-level fitter entry point
 └── inputs/
     ├── datasets/            Dataset definition (ROOT file path, tree, selection cut, weights)
@@ -27,22 +27,20 @@ plotting) can be read and modified independently.
 
 ---
 
+## Setup
+
+See [Building the input files](../../README.md#building-the-input-files) in the root README before running the fitter.
+
+---
+
 ## Running
 
 ```
-gundamFitter -c advanced/config.yaml
+gundamFitter -c example/advanced/config.yaml
 ```
 
-### Building the input dataset
+---
 
-The mock ROOT dataset must be built before running the fitter.
-Run the build macro from the repository root, then move the output to the
-expected location:
+## Input organization
 
-```
-root build/buildInputRootFile.C
-mv mydataset.root advanced/inputs/datasets/mydataset.root
-```
-
-(The build macro writes `mydataset.root` to the current working directory.
-Move it to `./example/advanced/inputs/datasets/` before running the fitter.)
+See [Input Organization: Flat vs. Modular](../../README.md#input-organization-flat-vs-modular) in the root README.

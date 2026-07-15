@@ -20,7 +20,7 @@ All commands are run from the **repository root**.
 ### Step 01 — Load dataset
 
 ```
-gundamFitter -c basic/01_load_dataset.yaml
+gundamFitter -c example/basic/01_load_dataset.yaml
 ```
 
 Loads the mock dataset and verifies that the event tree can be read.
@@ -30,7 +30,7 @@ No sample binning and no parameters are defined.
 ### Step 02 — Add event selection
 
 ```
-gundamFitter -c basic/02_load_dataset_selection.yaml
+gundamFitter -c example/basic/02_load_dataset_selection.yaml
 ```
 
 Adds one event selection (`selection == 1`) with 1D binning in muon momentum.
@@ -40,7 +40,7 @@ No parameters are defined.
 ### Step 03 — Add normalization parameter
 
 ```
-gundamFitter -c basic/03_load_dataset_selection_normparam.yaml
+gundamFitter -c example/basic/03_load_dataset_selection_normparam.yaml
 ```
 
 Adds one free normalization parameter generated from the local file `parameters.txt`.
@@ -49,11 +49,6 @@ scales the event weights for the selected sample.
 
 ---
 
-## Self-containment
+## Input organization
 
-This package supplies its own sample binning (`selection_1d.txt`) and parameter
-definition (`parameters.txt`) directly.
-It does not reference the modular sample or parameter configuration files inside
-`advanced/`.
-The only shared resource is the ROOT dataset file, which lives in
-`advanced/inputs/datasets/`.
+See [Input Organization: Flat vs. Modular](../../README.md#input-organization-flat-vs-modular) in the root README.
