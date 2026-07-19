@@ -2,9 +2,9 @@
 # Builds on step 4. Replaces free norm parameters with a covariance-matrix-
 # driven parameter set.  The covariance matrix and binning are read from local
 # files inside advanced/ (no Super Advanced files are referenced).
-# Run from the project root: gundamFitter -c advanced/07_correlated_norm_parameters.yaml
+# Run from the project root: gundamFitter -c example/extended/E04_correlated_norm_parameters.yaml
 
-outputFolder: "./output/advanced/07"
+outputFolder: "./output/extended/E04"
 
 fitterEngineConfig:
 

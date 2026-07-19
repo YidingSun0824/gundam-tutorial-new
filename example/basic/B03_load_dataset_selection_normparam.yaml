@@ -2,9 +2,9 @@
 # A single free normalization parameter is read from parameters.txt (one bin
 # covering all pmu → one parameter).  This is the minimal config that makes a
 # systematic parameter affect event counts — the foundation for all dial studies.
-# Run from the project root: gundamFitter -c basic/03_load_dataset_selection_normparam.yaml
+# Run from the project root: gundamFitter -c example/basic/B03_load_dataset_selection_normparam.yaml
 
-outputFolder: "./output/basic/03"
+outputFolder: "./output/basic/B03"
 
 fitterEngineConfig:
 

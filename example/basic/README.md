@@ -20,7 +20,7 @@ All commands are run from the **repository root**.
 ### Step 01 — Load dataset
 
 ```
-gundamFitter -c example/basic/01_load_dataset.yaml
+gundamFitter -c example/basic/B01_load_dataset.yaml
 ```
 
 Loads the mock dataset and verifies that the event tree can be read.
@@ -30,7 +30,7 @@ No sample binning and no parameters are defined.
 ### Step 02 — Add event selection
 
 ```
-gundamFitter -c example/basic/02_load_dataset_selection.yaml
+gundamFitter -c example/basic/B02_load_dataset_selection.yaml
 ```
 
 Adds one event selection (`selection == 1`) with 1D binning in muon momentum.
@@ -40,7 +40,7 @@ No parameters are defined.
 ### Step 03 — Add normalization parameter
 
 ```
-gundamFitter -c example/basic/03_load_dataset_selection_normparam.yaml
+gundamFitter -c example/basic/B03_load_dataset_selection_normparam.yaml
 ```
 
 Adds one free normalization parameter generated from the local file `parameters.txt`.

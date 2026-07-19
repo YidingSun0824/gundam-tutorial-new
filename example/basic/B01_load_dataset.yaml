@@ -1,10 +1,9 @@
-# Step 2: Dataset + selection.
-# Adds a selectionCutStr that picks topology "selection == 1" from the dataset.
-# Events are binned in 1D (pmu) using the local selection_1d.txt file.
-# No parameters — event weights are nominal (asimovWeight) only.
-# Run from the project root: gundamFitter -c basic/02_load_dataset_selection.yaml
+# Step 1: Load dataset only.
+# Verifies that the ROOT file opens, the event tree is readable, and the
+# dataset-level cut (selection != -1) is applied.  No sample binning, no parameters.
+# Run from the project root: gundamFitter -c example/basic/B01_load_dataset.yaml
 
-outputFolder: "./output/basic/02"
+outputFolder: "./output/basic/B01"
 
 fitterEngineConfig:
 
@@ -27,15 +26,13 @@ fitterEngineConfig:
 
           nominalWeightFormula:
             - "asimovWeight"
-            
+
     propagatorConfig:
 
       sampleSetConfig:
         sampleList:
-          - name: "Selection 1"
+          - name: "All selected events"
             isEnabled: true
-            selectionCutStr: "selection == 1"
-            binning: "./example/basic/selection_1d.txt"
             dataSets: [ "My dataset 1" ]
 
       parametersManagerConfig:

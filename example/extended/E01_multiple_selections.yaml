@@ -1,9 +1,9 @@
-# Step 5: Multiple free normalization parameters.
-# Builds on step 4. Adds 10 free normalization parameters generated from
-# parameters.txt (one parameter per reaction x pmu bin).
-# Run from the project root: gundamFitter -c advanced/05_multiple_norm_parameters.yaml
+# Step 4: Multiple selections with 1D, 2D, and 3D binning.
+# Three concurrent samples are defined, each using a local binning TXT file.
+# No parameters — demonstrates how to bin events into different topologies.
+# Run from the project root: gundamFitter -c example/extended/E01_multiple_selections.yaml
 
-outputFolder: "./output/advanced/05"
+outputFolder: "./output/extended/E01"
 
 fitterEngineConfig:
 
@@ -50,11 +50,4 @@ fitterEngineConfig:
             dataSets: [ "My dataset 1" ]
 
       parametersManagerConfig:
-        parameterSetList:
-          - name: "Free normalization parameters"
-            isEnabled: true
-            nominalStepSize: 0.1
-            useOnlyOneParameterPerEvent: true
-            dialSetDefinitions:
-              - applyOnDataSets: [ "My dataset 1" ]
-                parametersBinningPath: "./example/extended/parameters.txt"
+        parameterSetList: []

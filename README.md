@@ -60,18 +60,18 @@ This separation makes each concern independently readable and editable.
 ### Basic examples (steps 01–03)
 
 ```bash
-gundamFitter -c example/basic/01_load_dataset.yaml
-gundamFitter -c example/basic/02_load_dataset_selection.yaml
-gundamFitter -c example/basic/03_load_dataset_selection_normparam.yaml
+gundamFitter -c example/basic/B01_load_dataset.yaml
+gundamFitter -c example/basic/B02_load_dataset_selection.yaml
+gundamFitter -c example/basic/B03_load_dataset_selection_normparam.yaml
 ```
 
 ### Extended examples (steps 04–07)
 
 ```bash
-gundamFitter -c example/extended/04_multiple_selections.yaml
-gundamFitter -c example/extended/05_multiple_norm_parameters.yaml
-gundamFitter -c example/extended/06_spline_response_example.yaml
-gundamFitter -c example/extended/07_correlated_norm_parameters.yaml
+gundamFitter -c example/extended/E01_multiple_selections.yaml
+gundamFitter -c example/extended/E02_multiple_norm_parameters.yaml
+gundamFitter -c example/extended/E03_spline_response_example.yaml
+gundamFitter -c example/extended/E04_correlated_norm_parameters.yaml
 ```
 
 ### Full modular run
